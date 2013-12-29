@@ -1,0 +1,7 @@
+django==1.5.1
+fabric==1.4.3
+south==0.7.6
+MySQL-python
+django-extensions
+PIL
+django-photologue

@@ -1,0 +1,458 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-29 18:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: base/admin.py:48
+msgid "Details"
+msgstr "Detalhes"
+
+#: base/admin.py:51
+msgid "Other"
+msgstr "Outras"
+
+#: base/choices.py:7
+msgid "Red"
+msgstr "Vermelho"
+
+#: base/choices.py:8
+msgid "Green"
+msgstr "Verde"
+
+#: base/choices.py:9
+msgid "Dark Green"
+msgstr "Verde escuro"
+
+#: base/choices.py:10
+msgid "Black"
+msgstr "Preto"
+
+#: base/choices.py:11
+msgid "White"
+msgstr "Branco"
+
+#: base/choices.py:12
+msgid "Blue"
+msgstr "Azul"
+
+#: base/choices.py:13
+msgid "Dark Blue"
+msgstr "Azul escuro"
+
+#: base/choices.py:17
+msgid "Plumb"
+msgstr "Chumbo"
+
+#: base/choices.py:18
+msgid "Teflon"
+msgstr ""
+
+#: base/choices.py:19
+msgid "FMJ"
+msgstr ""
+
+#: base/choices.py:23
+msgid "Hollow cavity"
+msgstr ""
+
+#: base/choices.py:24
+msgid "Hollow point"
+msgstr ""
+
+#: base/choices.py:25
+msgid "Round nose"
+msgstr ""
+
+#: base/choices.py:26
+msgid "Flat point"
+msgstr ""
+
+#: base/choices.py:30
+msgid "alternative caliber 1"
+msgstr "calibre alternativo 1"
+
+#: base/choices.py:31
+msgid "alternative caliber 2"
+msgstr "calibre alternativo 2"
+
+#: base/choices.py:32
+msgid "alternative caliber 3"
+msgstr "calibre alternativo 3"
+
+#: base/choices.py:33
+msgid "alternative caliber 4"
+msgstr "calibre alternativo 4"
+
+#: base/choices.py:37
+msgid "rimmed"
+msgstr ""
+
+#: base/choices.py:38
+msgid "rimless"
+msgstr ""
+
+#: base/choices.py:42
+msgid "latao"
+msgstr ""
+
+#: base/choices.py:43
+msgid "aluminio"
+msgstr ""
+
+#: base/choices.py:47
+msgid "polvora laminada"
+msgstr ""
+
+#: base/choices.py:48
+msgid "polvora em discos"
+msgstr ""
+
+#: base/choices.py:49
+msgid "polvora esferica"
+msgstr ""
+
+#: base/choices.py:57
+msgid "exercicio"
+msgstr ""
+
+#: base/choices.py:58
+msgid "shotshell"
+msgstr ""
+
+#: base/choices.py:59
+msgid "real"
+msgstr ""
+
+#: base/choices.py:60
+msgid "real tracejante"
+msgstr ""
+
+#: base/choices.py:61
+msgid "real prateada"
+msgstr ""
+
+#: base/choices.py:62
+msgid "real cobreada"
+msgstr ""
+
+#: base/choices.py:63
+msgid "real incendiaria"
+msgstr ""
+
+#: base/choices.py:64
+msgid "salva"
+msgstr ""
+
+#: base/choices.py:68
+msgid "Belgium"
+msgstr "Bélgica"
+
+#: base/choices.py:69
+msgid "Bulgaria"
+msgstr "Bulgária"
+
+#: base/choices.py:70
+msgid "Switzerland"
+msgstr "Suiça"
+
+#: base/choices.py:71
+msgid "China"
+msgstr "China"
+
+#: base/choices.py:72
+msgid "Checoslovakia"
+msgstr "Checoslováquia"
+
+#: base/choices.py:73
+msgid "Germany"
+msgstr "Alemanha"
+
+#: base/choices.py:74
+msgid "Finland"
+msgstr "Finlândia"
+
+#: base/choices.py:75
+msgid "France"
+msgstr "França"
+
+#: base/choices.py:76
+msgid "Poland"
+msgstr "Polónia"
+
+#: base/choices.py:77
+msgid "UK"
+msgstr "Reino Unido"
+
+#: base/choices.py:78
+msgid "USSR"
+msgstr "URSS"
+
+#: base/choices.py:79
+msgid "USA"
+msgstr "EUA"
+
+#: base/choices.py:80
+msgid "Yugoslavia"
+msgstr "Jugoslávia"
+
+#: base/choices.py:84
+msgid "anelar"
+msgstr ""
+
+#: base/choices.py:85
+msgid "central"
+msgstr ""
+
+#: base/choices.py:96
+msgid "chumbo"
+msgstr ""
+
+#: base/choices.py:97
+msgid "chumbo cobreado"
+msgstr ""
+
+#: base/choices.py:98
+msgid "chumbo dourado"
+msgstr ""
+
+#: base/choices.py:99
+msgid "chumbo com camisa de cobre"
+msgstr ""
+
+#: base/choices.py:100
+msgid "chumbo com camisa de cobre e aco"
+msgstr ""
+
+#: base/models.py:10
+msgid "cover weight"
+msgstr "peso do invólucro"
+
+#: base/models.py:10
+msgid "in grams"
+msgstr "(em gramas)"
+
+#: base/models.py:11
+msgid "cover type"
+msgstr "tipo de invólucro"
+
+#: base/models.py:12
+msgid "cover material"
+msgstr "material do invólucro"
+
+#: base/models.py:13
+msgid "cover length"
+msgstr "comprimento do invólucro"
+
+#: base/models.py:13 base/models.py:42
+msgid "(in mm)"
+msgstr "(em mm)"
+
+#: base/models.py:23
+msgid "Cover"
+msgstr "Invólucro"
+
+#: base/models.py:24
+msgid "Covers"
+msgstr "Invólucros"
+
+#: base/models.py:28
+msgid "pulver type"
+msgstr "tipo de pólvora"
+
+#: base/models.py:29
+msgid "gunpowder color"
+msgstr "cor da pólvora"
+
+#: base/models.py:37 base/models.py:38
+msgid "Gunpowder"
+msgstr "Pólvora"
+
+#: base/models.py:42
+msgid "projectile diameter"
+msgstr "diâmetro do projectil"
+
+#: base/models.py:43
+msgid "projectile weight"
+msgstr "peso do projectil"
+
+#: base/models.py:43 base/models.py:85 base/models.py:86
+msgid "(in grams)"
+msgstr "(em gramas)"
+
+#: base/models.py:44
+msgid "projectile material"
+msgstr "material do projectil"
+
+#: base/models.py:45
+msgid "sulco serrilhado"
+msgstr ""
+
+#: base/models.py:46
+msgid "magnetic properties"
+msgstr "propriedades magnéticas"
+
+#: base/models.py:59
+msgid "Projectile"
+msgstr "Projectil"
+
+#: base/models.py:60
+msgid "Projectiles"
+msgstr "Projecteis"
+
+#: base/models.py:64
+msgid "tip color"
+msgstr "cor da ponta"
+
+#: base/models.py:65
+msgid "tip type"
+msgstr "tipo de ponta"
+
+#: base/models.py:66
+msgid "tip shape"
+msgstr "forma da ponta"
+
+#: base/models.py:75
+msgid "Tip"
+msgstr "Ponta"
+
+#: base/models.py:76
+msgid "Tips"
+msgstr "Pontas"
+
+#: base/models.py:80
+msgid "name"
+msgstr "nome"
+
+#: base/models.py:81
+msgid "head stamp"
+msgstr ""
+
+#: base/models.py:82
+msgid "year"
+msgstr "ano"
+
+#: base/models.py:83
+msgid "ammo type"
+msgstr "tipo de munição"
+
+#: base/models.py:84
+msgid "varnish color"
+msgstr "cor do verniz"
+
+#: base/models.py:85
+msgid "total weight"
+msgstr "peso total"
+
+#: base/models.py:86
+msgid "weight"
+msgstr "peso"
+
+#: base/models.py:87
+msgid "percussion type"
+msgstr "tipo de percussão"
+
+#: base/models.py:89
+msgid "country"
+msgstr "país"
+
+#: base/models.py:90
+msgid "factory"
+msgstr "fábrica"
+
+#: base/models.py:91
+msgid "notes"
+msgstr "notas"
+
+#: base/models.py:94
+msgid "tip"
+msgstr "ponta"
+
+#: base/models.py:95
+msgid "projectile"
+msgstr "projectil"
+
+#: base/models.py:96
+msgid "cover"
+msgstr "invólucro"
+
+#: base/models.py:97
+msgid "gunpowder"
+msgstr "pólvora"
+
+#: base/models.py:98
+msgid "photos"
+msgstr "fotos"
+
+#: base/models.py:107
+msgid "Ammunition"
+msgstr "Munição"
+
+#: base/models.py:108
+msgid "Ammunitions"
+msgstr "Munições"
+
+#: base/models.py:113
+msgid "caliber type"
+msgstr "tipo de calibre"
+
+#: base/models.py:114
+msgid "caliber value"
+msgstr "calibre"
+
+#: base/models.py:118
+msgid "Caliber"
+msgstr "calibre"
+
+#: base/models.py:119
+msgid "Calibers"
+msgstr "calibre"
+
+#: templates/twocolumn1.html:10
+msgid "Arlindo Lagoa"
+msgstr ""
+
+#: templates/twocolumn1.html:35 templates/twocolumn1.html.py:51
+msgid "Ammunition Database"
+msgstr "Base de dados de munições"
+
+#: templates/twocolumn1.html:37
+msgid "Database"
+msgstr "Base de dados"
+
+#: templates/twocolumn1.html:59
+msgid "Latest ammunitions"
+msgstr "Últimas munições"
+
+#: templates/admin/edit_inline/tabular.html:17
+msgid "Delete?"
+msgstr "Apagar?"
+
+#: templates/admin/edit_inline/tabular.html:30
+msgid "View on site"
+msgstr "Ver no site"
+
+#: templates/admin/edit_inline/tabular.html:75
+#, python-format
+msgid "Add another %(verbose_name)s"
+msgstr "Adicionar outro %(verbose_name)s"
+
+#: templates/admin/edit_inline/tabular.html:76
+msgid "Remove"
+msgstr "Remover"
+
+#~ msgid "caliber"
+#~ msgstr "calibre"
