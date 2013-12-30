@@ -64,6 +64,60 @@ def fix_color(color, part=None):
         return ''
 
 
+TIP_TYPES = {
+    'chumbo': 'pb',
+    'teflon': 'tf',
+    'fmj': 'fm',
+    'round nose': 'rn',
+    'hollow point': 'hp',
+    'hidra shock': 'hs',
+    'madeira': 'wo',
+    'borracha': 'ru',
+    'cromada': 'cr',
+}
+
+def fix_tip_type(tip_type):
+    if not tip_type:
+        return ''
+
+    tip_type = tip_type.lower()
+    if tip_type in TIP_TYPES:
+        return TIP_TYPES[tip_type]
+    else:
+        print 'tip type not in dict ' + tip_type
+        return ''
+
+TIP_SHAPES = {
+    'hollow cavity': 'hc',
+    'hollow point': 'hp',
+    'round nose': 'rn',
+    'flat point': 'fp',
+    'truncated': 'tr',
+    'semi-wadcute': 'sw',
+    'calepino de papel': 'cp',
+    'spitzer': 'sp',
+    'boat-tail': 'bt',
+}
+
+def fix_tip_shape(tip_shape):
+    if not tip_shape:
+        return ''
+
+    tip_shape = tip_shape.lower()
+    if tip_shape in TIP_SHAPES:
+        return TIP_SHAPES[tip_shape]
+    else:
+        print 'tip shape not in dict ' + tip_shape
+        return ''
+
+def fix_tip(value):
+    value = value.split(',')
+    tip_type = value[0].strip()
+    tip_shape = value[1].strip()
+
+    return fix_tip_type(tip_type), fix_tip_shape(tip_shape)
+
+
 class Command(BaseCommand):
     """Reads the csv file and puts it in the db"""
 
@@ -93,8 +147,12 @@ class Command(BaseCommand):
         # Tip
         kwargs_tip = dict()
         kwargs_tip['tip_color'] = fix_color(line[5].strip())
-        kwargs_tip['tip_type'] = line[6].strip()
-        kwargs_tip['tip_shape'] = line[7].strip()
+        tip_type = line[6].strip()
+        if ',' in tip_type:
+            kwargs_tip['tip_type'], kwargs_tip['tip_shape'] = fix_tip(tip_type)
+        else:
+            kwargs_tip['tip_type'] = fix_tip_type(tip_type)
+            kwargs_tip['tip_shape'] = fix_tip_shape(line[7].strip())
 
         # Projectile
         kwargs_projectile = dict()
