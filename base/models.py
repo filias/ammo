@@ -25,16 +25,16 @@ class AmmoCover(models.Model):
 
 
 class AmmoGunpowder(models.Model):
-    gunpowder_type = models.CharField(_('pulver type'), max_length=2, choices=GUNPOWDER_TYPE_CHOICES, blank=True)  # tipo de polvora
+    gunpowder_type = models.CharField(_('gunpowder type'), max_length=2, choices=GUNPOWDER_TYPE_CHOICES, blank=True)  # tipo de polvora
     gunpowder_color = models.CharField(_('gunpowder color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da polvora
-    gunpowder_weight = models.FloatField(_('weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso TODO: o que e?
+    gunpowder_weight = models.FloatField(_('gunpowder weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso da polvora
 
     def __unicode__(self):
         return '{} {}'.format(self.get_gunpowder_type_display(),
                               self.get_gunpowder_color_display())
 
     class Meta:
-        unique_together = ('gunpowder_type', 'gunpowder_color', 'gunpowder_weight')
+        unique_together = ('gunpowder_type', 'gunpowder_weight', 'gunpowder_color')
         verbose_name = _('Gunpowder')
         verbose_name_plural = _('Gunpowder')
 

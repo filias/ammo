@@ -5,6 +5,7 @@ from django.core.management import BaseCommand
 
 from base.models import Ammo, AmmoCaliber, AmmoCover, AmmoGunpowder, \
     AmmoProjectile, AmmoTip
+from django.db import IntegrityError
 
 
 def fix_float(value):
