@@ -91,10 +91,10 @@ class Ammo(models.Model):
     notes = models.TextField(_('notes'), blank=True)  # notas
 
     # Foreign keys
-    tip = models.ForeignKey(AmmoTip, blank=True, verbose_name=_('tip'))
-    projectile = models.ForeignKey(AmmoProjectile, blank=True, verbose_name=_('projectile'))
-    cover = models.ForeignKey(AmmoCover, blank=True, verbose_name=_('cover'))
-    gunpowder = models.ForeignKey(AmmoGunpowder, blank=True, verbose_name=_('gunpowder'))
+    tip = models.ForeignKey(AmmoTip, blank=True, null=True, verbose_name=_('tip'))
+    projectile = models.ForeignKey(AmmoProjectile, blank=True, null=True, verbose_name=_('projectile'))
+    cover = models.ForeignKey(AmmoCover, blank=True, null=True, verbose_name=_('cover'))
+    gunpowder = models.ForeignKey(AmmoGunpowder, blank=True, null=True, verbose_name=_('gunpowder'))
     photos = models.ManyToManyField(Photo, verbose_name=_('photos'))
 
     created_at = models.DateTimeField(auto_now_add=True)
