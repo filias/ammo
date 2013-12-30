@@ -33,6 +33,10 @@ COLORS = {'vermelho': 're',
           'azul': 'bl',
           'azul escuro': 'db',
           'prata': 'si',
+          'roxo': 'pu',
+          'roxa': 'pu',
+          'laranja': 'or',
+          'castanho': 'br',
           'cinza': 'ga'}
 
 def fix_color(color, part=None):
@@ -41,11 +45,17 @@ def fix_color(color, part=None):
 
     color = color.lower()
     if part == 'f':
-        # cor do verniz do fulminante
-        color = color.replace('f-', '')
+        if 'f-' not in color:
+            return ''
+        else:
+            # cor do verniz do fulminante
+            color = color.replace('f-', '')
     elif part == 'p':
-        # cor do verniz do projectil
-        color = color.replace('p-', '')
+        if 'p-' not in color:
+            return ''
+        else:
+            # cor do verniz do projectil
+            color = color.replace('p-', '')
 
     if color in COLORS:
         return COLORS[color]

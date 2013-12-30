@@ -12,6 +12,9 @@ COLOR_CHOICES = (
     ('bl', _('Blue')),
     ('db', _('Dark Blue')),
     ('ga', _('Gray')),
+    ('pu', _('Purple')),
+    ('br', _('Brown')),
+    ('or', _('Orange')),
     ('si', _('Silver')),
 )
 

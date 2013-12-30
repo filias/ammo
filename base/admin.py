@@ -42,7 +42,7 @@ class AmmoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('name', 'head_stamp', 'year', 'ammo_type',
-            'varnish_color', 'total_weight', 'weight',
+            'fulminant_varnish_color', 'total_weight',
             'percussion_type', 'country', 'factory')
         }),
         (_('Details'), {
