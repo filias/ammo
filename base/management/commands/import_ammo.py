@@ -21,6 +21,26 @@ def fix_float(value):
     return float(value)
 
 
+COLORS = {'vermelho': 're',
+          'verde': 'gr',
+          'verde escuro': 'dg',
+          'preto': 'bl',
+          'branco': 'wh',
+          'azul': 'bl',
+          'azul escuro': 'db',
+          'cinza': 'ga'}
+
+def fix_color(color):
+    if not color:
+        return color
+
+    color = color.lower()
+    if color in COLORS:
+        return COLORS[color]
+    else:
+        print 'color not in dict ' + color
+
+
 class Command(BaseCommand):
     """Reads the csv file and puts it in the db"""
 
@@ -29,11 +49,11 @@ class Command(BaseCommand):
 
         # Ammo
         kwargs_ammo = dict()
-        kwargs_ammo['caliber'] = line[0].strip()
+        kwargs_ammo['name'] = line[0].strip()
         kwargs_ammo['head_stamp'] = line[1].strip()
         kwargs_ammo['year'] = line[2].strip()
         kwargs_ammo['ammo_type'] = line[3].strip()
-        kwargs_ammo['varnish_color'] = line[4].strip()
+        kwargs_ammo['varnish_color'] = fix_color(line[4].strip())
         kwargs_ammo['country'] = line[10].strip()
         kwargs_ammo['factory'] = line[11].strip()
         kwargs_ammo['total_weight'] = fix_float(line[16].strip())
@@ -50,7 +70,7 @@ class Command(BaseCommand):
 
         # Tip
         kwargs_tip = dict()
-        kwargs_tip['tip_color'] = line[5].strip()
+        kwargs_tip['tip_color'] = fix_color(line[5].strip())
         kwargs_tip['tip_type'] = line[6].strip()
         kwargs_tip['tip_shape'] = line[7].strip()
 
@@ -72,7 +92,7 @@ class Command(BaseCommand):
         # Gunpowder
         kwargs_gunpowder = dict()
         kwargs_gunpowder['gunpowder_type'] = line[25].strip()
-        kwargs_gunpowder['gunpowder_color'] = line[26].strip()
+        kwargs_gunpowder['gunpowder_color'] = fix_color(line[26].strip())
 
         # Put together
         for key in ('ammo', 'tip', 'cover', 'calibers', 'projectile', 'gunpowder'):
@@ -115,3 +135,13 @@ class Command(BaseCommand):
                 values = dict()
                 for key in ('cover', 'projectile', 'gunpowder', 'tip'):
                     values[key] = getattr(self, 'create_ammo' + key)(**result[key])
+
+                # Create calibers
+                # TODO
+
+                # Create ammo
+                ammo = Ammo.objects.create(**result['ammo'])
+                for key in ('cover', 'projectile', 'gunpowder', 'tip'):
+                    ammo.key = values[key]
+
+                import pdb; pdb.set_trace()
