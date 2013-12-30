@@ -11,6 +11,7 @@ COLOR_CHOICES = (
     ('wh', _('White')),
     ('bl', _('Blue')),
     ('db', _('Dark Blue')),
+    ('ga', _('Gray')),
 )
 
 TIP_TYPE_CHOICES = (

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-29 18:43+0000\n"
+"POT-Creation-Date: 2013-12-30 11:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,187 +53,191 @@ msgstr "Azul"
 msgid "Dark Blue"
 msgstr "Azul escuro"
 
-#: base/choices.py:17
+#: base/choices.py:14
+msgid "Gray"
+msgstr "Cinza"
+
+#: base/choices.py:18
 msgid "Plumb"
 msgstr "Chumbo"
 
-#: base/choices.py:18
+#: base/choices.py:19
 msgid "Teflon"
 msgstr ""
 
-#: base/choices.py:19
+#: base/choices.py:20
 msgid "FMJ"
 msgstr ""
 
-#: base/choices.py:23
+#: base/choices.py:24
 msgid "Hollow cavity"
 msgstr ""
 
-#: base/choices.py:24
+#: base/choices.py:25
 msgid "Hollow point"
 msgstr ""
 
-#: base/choices.py:25
+#: base/choices.py:26
 msgid "Round nose"
 msgstr ""
 
-#: base/choices.py:26
+#: base/choices.py:27
 msgid "Flat point"
 msgstr ""
 
-#: base/choices.py:30
+#: base/choices.py:31
 msgid "alternative caliber 1"
 msgstr "calibre alternativo 1"
 
-#: base/choices.py:31
+#: base/choices.py:32
 msgid "alternative caliber 2"
 msgstr "calibre alternativo 2"
 
-#: base/choices.py:32
+#: base/choices.py:33
 msgid "alternative caliber 3"
 msgstr "calibre alternativo 3"
 
-#: base/choices.py:33
+#: base/choices.py:34
 msgid "alternative caliber 4"
 msgstr "calibre alternativo 4"
 
-#: base/choices.py:37
+#: base/choices.py:38
 msgid "rimmed"
 msgstr ""
 
-#: base/choices.py:38
+#: base/choices.py:39
 msgid "rimless"
 msgstr ""
 
-#: base/choices.py:42
+#: base/choices.py:43
 msgid "latao"
 msgstr ""
 
-#: base/choices.py:43
+#: base/choices.py:44
 msgid "aluminio"
 msgstr ""
 
-#: base/choices.py:47
+#: base/choices.py:48
 msgid "polvora laminada"
 msgstr ""
 
-#: base/choices.py:48
+#: base/choices.py:49
 msgid "polvora em discos"
 msgstr ""
 
-#: base/choices.py:49
+#: base/choices.py:50
 msgid "polvora esferica"
 msgstr ""
 
-#: base/choices.py:57
+#: base/choices.py:58
 msgid "exercicio"
 msgstr ""
 
-#: base/choices.py:58
+#: base/choices.py:59
 msgid "shotshell"
 msgstr ""
 
-#: base/choices.py:59
+#: base/choices.py:60
 msgid "real"
 msgstr ""
 
-#: base/choices.py:60
+#: base/choices.py:61
 msgid "real tracejante"
 msgstr ""
 
-#: base/choices.py:61
+#: base/choices.py:62
 msgid "real prateada"
 msgstr ""
 
-#: base/choices.py:62
+#: base/choices.py:63
 msgid "real cobreada"
 msgstr ""
 
-#: base/choices.py:63
+#: base/choices.py:64
 msgid "real incendiaria"
 msgstr ""
 
-#: base/choices.py:64
+#: base/choices.py:65
 msgid "salva"
 msgstr ""
 
-#: base/choices.py:68
+#: base/choices.py:69
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: base/choices.py:69
+#: base/choices.py:70
 msgid "Bulgaria"
 msgstr "Bulgária"
 
-#: base/choices.py:70
+#: base/choices.py:71
 msgid "Switzerland"
 msgstr "Suiça"
 
-#: base/choices.py:71
+#: base/choices.py:72
 msgid "China"
 msgstr "China"
 
-#: base/choices.py:72
+#: base/choices.py:73
 msgid "Checoslovakia"
 msgstr "Checoslováquia"
 
-#: base/choices.py:73
+#: base/choices.py:74
 msgid "Germany"
 msgstr "Alemanha"
 
-#: base/choices.py:74
+#: base/choices.py:75
 msgid "Finland"
 msgstr "Finlândia"
 
-#: base/choices.py:75
+#: base/choices.py:76
 msgid "France"
 msgstr "França"
 
-#: base/choices.py:76
+#: base/choices.py:77
 msgid "Poland"
 msgstr "Polónia"
 
-#: base/choices.py:77
+#: base/choices.py:78
 msgid "UK"
 msgstr "Reino Unido"
 
-#: base/choices.py:78
+#: base/choices.py:79
 msgid "USSR"
 msgstr "URSS"
 
-#: base/choices.py:79
+#: base/choices.py:80
 msgid "USA"
 msgstr "EUA"
 
-#: base/choices.py:80
+#: base/choices.py:81
 msgid "Yugoslavia"
 msgstr "Jugoslávia"
 
-#: base/choices.py:84
+#: base/choices.py:85
 msgid "anelar"
 msgstr ""
 
-#: base/choices.py:85
+#: base/choices.py:86
 msgid "central"
 msgstr ""
 
-#: base/choices.py:96
+#: base/choices.py:97
 msgid "chumbo"
 msgstr ""
 
-#: base/choices.py:97
+#: base/choices.py:98
 msgid "chumbo cobreado"
 msgstr ""
 
-#: base/choices.py:98
+#: base/choices.py:99
 msgid "chumbo dourado"
 msgstr ""
 
-#: base/choices.py:99
+#: base/choices.py:100
 msgid "chumbo com camisa de cobre"
 msgstr ""
 
-#: base/choices.py:100
+#: base/choices.py:101
 msgid "chumbo com camisa de cobre e aco"
 msgstr ""
 
@@ -453,6 +457,3 @@ msgstr "Adicionar outro %(verbose_name)s"
 #: templates/admin/edit_inline/tabular.html:76
 msgid "Remove"
 msgstr "Remover"
-
-#~ msgid "caliber"
-#~ msgstr "calibre"
