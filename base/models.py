@@ -27,23 +27,25 @@ class AmmoCover(models.Model):
 class AmmoGunpowder(models.Model):
     gunpowder_type = models.CharField(_('pulver type'), max_length=2, choices=GUNPOWDER_TYPE_CHOICES, blank=True)  # tipo de polvora
     gunpowder_color = models.CharField(_('gunpowder color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da polvora
+    gunpowder_weight = models.FloatField(_('weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso TODO: o que e?
 
     def __unicode__(self):
         return '{} {}'.format(self.get_gunpowder_type_display(),
                               self.get_gunpowder_color_display())
 
     class Meta:
-        unique_together = ('gunpowder_type', 'gunpowder_color')
+        unique_together = ('gunpowder_type', 'gunpowder_color', 'gunpowder_weight')
         verbose_name = _('Gunpowder')
         verbose_name_plural = _('Gunpowder')
 
 
 class AmmoProjectile(models.Model):
     projectile_diameter = models.FloatField(_('projectile diameter'), null=True, blank=True, help_text=_('(in mm)'))  # B0
-    projectile_weight = models.FloatField(_('projectile weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso do projectil
+    projectile_weight = models.FloatField(_('projectile weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso do projectil pode variar
     projectile_material = models.CharField(_('projectile material'), max_length=2, choices=PROJECTILE_MATERIAL_CHOICES, blank=True)  # material do projectil
     sulco_serrilhado = models.CharField(_('sulco serrilhado'), max_length=1, choices=PROJECTILE_SS_CHOICES, blank=True, default='0')  # sulco serrilhado
     has_magnetic_properties = models.BooleanField(_('magnetic properties'), default=False)  # propriedades magneticas
+    projectile_varnish_color = models.CharField(_('projectile varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz parte p
 
     def __unicode__(self):
         return '{} {}mm {}g {} {}'.format(self.get_projectile_material_display(),
@@ -55,7 +57,7 @@ class AmmoProjectile(models.Model):
     class Meta:
         unique_together = ('projectile_diameter', 'projectile_weight',
                            'projectile_material', 'sulco_serrilhado',
-                           'has_magnetic_properties')
+                           'has_magnetic_properties', 'projectile_varnish_color')
         verbose_name = _('Projectile')
         verbose_name_plural = _('Projectiles')
 
@@ -81,9 +83,8 @@ class Ammo(models.Model):
     head_stamp = models.TextField(_('head stamp'), blank=True)  # headstamp
     year = models.CharField(_('year'), max_length=4, choices=YEAR_CHOICES, blank=True)  # ano de fabrico
     ammo_type = models.CharField(_('ammo type'), max_length=2, choices=AMMO_TYPE_CHOICES, blank=True)  # tipo
-    varnish_color = models.CharField(_('varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz
+    fulminant_varnish_color = models.CharField(_('fulminant varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz parte f
     total_weight = models.FloatField(_('total weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso total
-    weight = models.FloatField(_('weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso TODO: o que e?
     percussion_type = models.CharField(_('percussion type'), max_length=2, choices=PERCUSSION_TYPE_CHOICES, blank=True)  # tipo de percussao
 
     country = models.CharField(_('country'), max_length=2, choices=COUNTRY_CHOICES, blank=True)  # pais

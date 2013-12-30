@@ -22,23 +22,35 @@ def fix_float(value):
 
 
 COLORS = {'vermelho': 're',
+          'vermelha': 're',
           'verde': 'gr',
-          'verde escuro': 'dg',
+          'verde-escuro': 'dg',
           'preto': 'bl',
+          'preta': 'bl',
           'branco': 'wh',
+          'branca': 'wh',
           'azul': 'bl',
           'azul escuro': 'db',
+          'prata': 'si',
           'cinza': 'ga'}
 
-def fix_color(color):
+def fix_color(color, part=None):
     if not color:
-        return color
+        return ''
 
     color = color.lower()
+    if part == 'f':
+        # cor do verniz do fulminante
+        color = color.replace('f-', '')
+    elif part == 'p':
+        # cor do verniz do projectil
+        color = color.replace('p-', '')
+
     if color in COLORS:
         return COLORS[color]
     else:
         print 'color not in dict ' + color
+        return ''
 
 
 class Command(BaseCommand):
@@ -53,11 +65,10 @@ class Command(BaseCommand):
         kwargs_ammo['head_stamp'] = line[1].strip()
         kwargs_ammo['year'] = line[2].strip()
         kwargs_ammo['ammo_type'] = line[3].strip()
-        kwargs_ammo['varnish_color'] = fix_color(line[4].strip())
+        kwargs_ammo['fulminant_varnish_color'] = fix_color(line[4].strip(), part='f')
         kwargs_ammo['country'] = line[10].strip()
         kwargs_ammo['factory'] = line[11].strip()
         kwargs_ammo['total_weight'] = fix_float(line[16].strip())
-        kwargs_ammo['weight'] = fix_float(line[17].strip())
         kwargs_ammo['percussion_type'] = line[27].strip()
         kwargs_ammo['notes'] = line[28].strip()
 
@@ -81,6 +92,7 @@ class Command(BaseCommand):
         kwargs_projectile['projectile_weight'] = fix_float(line[21].strip())
         kwargs_projectile['has_magnetic_properties'] = line[18].strip() == 'Sim'
         kwargs_projectile['sulco_serrilhado'] = line[20].strip()
+        kwargs_projectile['projectile_varnish_color'] = fix_color(line[4].strip(), part='p')
 
         # Cover
         kwargs_cover = dict()
@@ -93,6 +105,7 @@ class Command(BaseCommand):
         kwargs_gunpowder = dict()
         kwargs_gunpowder['gunpowder_type'] = line[25].strip()
         kwargs_gunpowder['gunpowder_color'] = fix_color(line[26].strip())
+        kwargs_gunpowder['gunpowder_weight'] = fix_float(line[17].strip())
 
         # Put together
         for key in ('ammo', 'tip', 'cover', 'calibers', 'projectile', 'gunpowder'):
@@ -109,8 +122,6 @@ class Command(BaseCommand):
         return projectile
 
     def create_ammogunpowder(self, **kwargs):
-        if kwargs['gunpowder_color']:
-            import pdb; pdb.set_trace()
         gunpowder, created = AmmoGunpowder.objects.get_or_create(**kwargs)
         return gunpowder
 
@@ -143,5 +154,3 @@ class Command(BaseCommand):
                 ammo = Ammo.objects.create(**result['ammo'])
                 for key in ('cover', 'projectile', 'gunpowder', 'tip'):
                     ammo.key = values[key]
-
-                import pdb; pdb.set_trace()
