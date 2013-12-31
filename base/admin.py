@@ -14,7 +14,7 @@ class AmmoCaliberInline(admin.StackedInline):
     extra = 4
 
 
-class AmmoCoverAdmin(admin.ModelAdmin):
+class AmmoCasingAdmin(admin.ModelAdmin):
 
     class Meta:
         model = AmmoCasing
@@ -56,7 +56,7 @@ class AmmoAdmin(admin.ModelAdmin):
         model = Ammo
 
 admin.site.register(Ammo, AmmoAdmin)
-admin.site.register(AmmoCasing, AmmoCoverAdmin)
+admin.site.register(AmmoCasing, AmmoCasingAdmin)
 admin.site.register(AmmoGunpowder, AmmoGunpowderAdmin)
 admin.site.register(AmmoProjectile, AmmoProjectileAdmin)
 

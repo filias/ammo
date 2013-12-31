@@ -112,7 +112,7 @@ class Command(BaseCommand):
         kwargs_ammo['head_stamp'] = line[1].strip()
         kwargs_ammo['year'] = line[2].strip()
         kwargs_ammo['ammo_type'] = line[3].strip()
-        kwargs_ammo['fulminant_varnish_color'] = fix_color(line[4].strip())
+        kwargs_ammo['primer_varnish_color'] = fix_color(line[4].strip())
         kwargs_ammo['country'] = line[11].strip()
         kwargs_ammo['factory'] = line[12].strip()
         kwargs_ammo['total_weight'] = fix_float(line[17].strip())
@@ -138,12 +138,12 @@ class Command(BaseCommand):
         kwargs_projectile['tip_type'] = fix_tip_type(line[7].strip())
         kwargs_projectile['tip_shape'] = fix_tip_shape(line[8].strip())
 
-        # Cover
-        kwargs_cover = dict()
-        kwargs_cover['cover_length'] = fix_float(line[10].strip())
-        kwargs_cover['cover_material'] = line[23].strip()
-        kwargs_cover['cover_type'] = line[24].strip()
-        kwargs_cover['cover_weight'] = fix_float(line[25].strip())
+        # Casing
+        kwargs_casing = dict()
+        kwargs_casing['casing_length'] = fix_float(line[10].strip())
+        kwargs_casing['casing_material'] = line[23].strip()
+        kwargs_casing['casing_type'] = line[24].strip()
+        kwargs_casing['casing_weight'] = fix_float(line[25].strip())
 
         # Gunpowder
         kwargs_gunpowder = dict()
@@ -152,7 +152,7 @@ class Command(BaseCommand):
         kwargs_gunpowder['gunpowder_weight'] = fix_float(line[22].strip())
 
         # Put together
-        for key in ('ammo', 'cover', 'calibers', 'projectile', 'gunpowder'):
+        for key in ('ammo', 'casing', 'calibers', 'projectile', 'gunpowder'):
             result[key] = locals()['kwargs_' + key]
 
         return result
