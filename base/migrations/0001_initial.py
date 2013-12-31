@@ -8,18 +8,18 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'AmmoCover'
-        db.create_table(u'base_ammocover', (
+        # Adding model 'AmmoCasing'
+        db.create_table(u'base_ammocasing', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('cover_weight', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('cover_type', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
-            ('cover_material', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
-            ('cover_length', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('casing_weight', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('casing_type', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
+            ('casing_material', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
+            ('casing_length', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
         ))
-        db.send_create_signal(u'base', ['AmmoCover'])
+        db.send_create_signal(u'base', ['AmmoCasing'])
 
-        # Adding unique constraint on 'AmmoCover', fields ['cover_weight', 'cover_type', 'cover_material', 'cover_length']
-        db.create_unique(u'base_ammocover', ['cover_weight', 'cover_type', 'cover_material', 'cover_length'])
+        # Adding unique constraint on 'AmmoCasing', fields ['casing_weight', 'casing_type', 'casing_material', 'casing_length']
+        db.create_unique(u'base_ammocasing', ['casing_weight', 'casing_type', 'casing_material', 'casing_length'])
 
         # Adding model 'AmmoGunpowder'
         db.create_table(u'base_ammogunpowder', (
@@ -39,26 +39,17 @@ class Migration(SchemaMigration):
             ('projectile_diameter', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('projectile_weight', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('projectile_material', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
-            ('sulco_serrilhado', self.gf('django.db.models.fields.CharField')(default='0', max_length=1, blank=True)),
+            ('serrated', self.gf('django.db.models.fields.CharField')(default='0', max_length=1, blank=True)),
             ('has_magnetic_properties', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('projectile_varnish_color', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
-        ))
-        db.send_create_signal(u'base', ['AmmoProjectile'])
-
-        # Adding unique constraint on 'AmmoProjectile', fields ['projectile_diameter', 'projectile_weight', 'projectile_material', 'sulco_serrilhado', 'has_magnetic_properties', 'projectile_varnish_color']
-        db.create_unique(u'base_ammoprojectile', ['projectile_diameter', 'projectile_weight', 'projectile_material', 'sulco_serrilhado', 'has_magnetic_properties', 'projectile_varnish_color'])
-
-        # Adding model 'AmmoTip'
-        db.create_table(u'base_ammotip', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('tip_color', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('tip_type', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('tip_shape', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
         ))
-        db.send_create_signal(u'base', ['AmmoTip'])
+        db.send_create_signal(u'base', ['AmmoProjectile'])
 
-        # Adding unique constraint on 'AmmoTip', fields ['tip_color', 'tip_type', 'tip_shape']
-        db.create_unique(u'base_ammotip', ['tip_color', 'tip_type', 'tip_shape'])
+        # Adding unique constraint on 'AmmoProjectile', fields ['projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape']
+        db.create_unique(u'base_ammoprojectile', ['projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape'])
 
         # Adding model 'Ammo'
         db.create_table(u'base_ammo', (
@@ -67,15 +58,14 @@ class Migration(SchemaMigration):
             ('head_stamp', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('year', self.gf('django.db.models.fields.CharField')(max_length=4, blank=True)),
             ('ammo_type', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
-            ('fulminant_varnish_color', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
+            ('primer_varnish_color', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('total_weight', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('percussion_type', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('country', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('factory', self.gf('django.db.models.fields.CharField')(max_length=128, blank=True)),
             ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('tip', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.AmmoTip'], null=True, blank=True)),
             ('projectile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.AmmoProjectile'], null=True, blank=True)),
-            ('cover', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.AmmoCover'], null=True, blank=True)),
+            ('casing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.AmmoCasing'], null=True, blank=True)),
             ('gunpowder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.AmmoGunpowder'], null=True, blank=True)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('modified_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
@@ -107,29 +97,23 @@ class Migration(SchemaMigration):
         # Removing unique constraint on 'AmmoCaliber', fields ['caliber_type', 'caliber_value']
         db.delete_unique(u'base_ammocaliber', ['caliber_type', 'caliber_value'])
 
-        # Removing unique constraint on 'AmmoTip', fields ['tip_color', 'tip_type', 'tip_shape']
-        db.delete_unique(u'base_ammotip', ['tip_color', 'tip_type', 'tip_shape'])
-
-        # Removing unique constraint on 'AmmoProjectile', fields ['projectile_diameter', 'projectile_weight', 'projectile_material', 'sulco_serrilhado', 'has_magnetic_properties', 'projectile_varnish_color']
-        db.delete_unique(u'base_ammoprojectile', ['projectile_diameter', 'projectile_weight', 'projectile_material', 'sulco_serrilhado', 'has_magnetic_properties', 'projectile_varnish_color'])
+        # Removing unique constraint on 'AmmoProjectile', fields ['projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape']
+        db.delete_unique(u'base_ammoprojectile', ['projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape'])
 
         # Removing unique constraint on 'AmmoGunpowder', fields ['gunpowder_type', 'gunpowder_weight', 'gunpowder_color']
         db.delete_unique(u'base_ammogunpowder', ['gunpowder_type', 'gunpowder_weight', 'gunpowder_color'])
 
-        # Removing unique constraint on 'AmmoCover', fields ['cover_weight', 'cover_type', 'cover_material', 'cover_length']
-        db.delete_unique(u'base_ammocover', ['cover_weight', 'cover_type', 'cover_material', 'cover_length'])
+        # Removing unique constraint on 'AmmoCasing', fields ['casing_weight', 'casing_type', 'casing_material', 'casing_length']
+        db.delete_unique(u'base_ammocasing', ['casing_weight', 'casing_type', 'casing_material', 'casing_length'])
 
-        # Deleting model 'AmmoCover'
-        db.delete_table(u'base_ammocover')
+        # Deleting model 'AmmoCasing'
+        db.delete_table(u'base_ammocasing')
 
         # Deleting model 'AmmoGunpowder'
         db.delete_table(u'base_ammogunpowder')
 
         # Deleting model 'AmmoProjectile'
         db.delete_table(u'base_ammoprojectile')
-
-        # Deleting model 'AmmoTip'
-        db.delete_table(u'base_ammotip')
 
         # Deleting model 'Ammo'
         db.delete_table(u'base_ammo')
@@ -145,11 +129,10 @@ class Migration(SchemaMigration):
         u'base.ammo': {
             'Meta': {'object_name': 'Ammo'},
             'ammo_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
+            'casing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.AmmoCasing']", 'null': 'True', 'blank': 'True'}),
             'country': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
-            'cover': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.AmmoCover']", 'null': 'True', 'blank': 'True'}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'factory': ('django.db.models.fields.CharField', [], {'max_length': '128', 'blank': 'True'}),
-            'fulminant_varnish_color': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'gunpowder': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.AmmoGunpowder']", 'null': 'True', 'blank': 'True'}),
             'head_stamp': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -158,8 +141,8 @@ class Migration(SchemaMigration):
             'notes': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'percussion_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'photos': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['photologue.Photo']", 'symmetrical': 'False'}),
+            'primer_varnish_color': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'projectile': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.AmmoProjectile']", 'null': 'True', 'blank': 'True'}),
-            'tip': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.AmmoTip']", 'null': 'True', 'blank': 'True'}),
             'total_weight': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'year': ('django.db.models.fields.CharField', [], {'max_length': '4', 'blank': 'True'})
         },
@@ -170,12 +153,12 @@ class Migration(SchemaMigration):
             'caliber_value': ('django.db.models.fields.CharField', [], {'max_length': '32', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
-        u'base.ammocover': {
-            'Meta': {'unique_together': "(('cover_weight', 'cover_type', 'cover_material', 'cover_length'),)", 'object_name': 'AmmoCover'},
-            'cover_length': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
-            'cover_material': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
-            'cover_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
-            'cover_weight': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+        u'base.ammocasing': {
+            'Meta': {'unique_together': "(('casing_weight', 'casing_type', 'casing_material', 'casing_length'),)", 'object_name': 'AmmoCasing'},
+            'casing_length': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'casing_material': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
+            'casing_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
+            'casing_weight': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         u'base.ammogunpowder': {
@@ -186,18 +169,14 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         u'base.ammoprojectile': {
-            'Meta': {'unique_together': "(('projectile_diameter', 'projectile_weight', 'projectile_material', 'sulco_serrilhado', 'has_magnetic_properties', 'projectile_varnish_color'),)", 'object_name': 'AmmoProjectile'},
+            'Meta': {'unique_together': "(('projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape'),)", 'object_name': 'AmmoProjectile'},
             'has_magnetic_properties': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'projectile_diameter': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'projectile_material': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'projectile_varnish_color': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'projectile_weight': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
-            'sulco_serrilhado': ('django.db.models.fields.CharField', [], {'default': "'0'", 'max_length': '1', 'blank': 'True'})
-        },
-        u'base.ammotip': {
-            'Meta': {'unique_together': "(('tip_color', 'tip_type', 'tip_shape'),)", 'object_name': 'AmmoTip'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'serrated': ('django.db.models.fields.CharField', [], {'default': "'0'", 'max_length': '1', 'blank': 'True'}),
             'tip_color': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'tip_shape': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'tip_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'})

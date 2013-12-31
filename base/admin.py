@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from base.models import Ammo, AmmoCover, AmmoGunpowder, \
-    AmmoCaliber, AmmoProjectile, AmmoTip
+from base.models import Ammo, AmmoCasing, AmmoGunpowder, \
+    AmmoCaliber, AmmoProjectile
 
 
 class PhotoInline(admin.TabularInline):
@@ -17,7 +17,7 @@ class AmmoCaliberInline(admin.StackedInline):
 class AmmoCoverAdmin(admin.ModelAdmin):
 
     class Meta:
-        model = AmmoCover
+        model = AmmoCasing
 
 
 class AmmoGunpowderAdmin(admin.ModelAdmin):
@@ -32,12 +32,6 @@ class AmmoProjectileAdmin(admin.ModelAdmin):
         model = AmmoProjectile
 
 
-class AmmoTipAdmin(admin.ModelAdmin):
-
-    class Meta:
-        model = AmmoTip
-
-
 class AmmoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
@@ -46,14 +40,15 @@ class AmmoAdmin(admin.ModelAdmin):
             'percussion_type', 'country', 'factory')
         }),
         (_('Details'), {
-            'fields': ('cover', 'gunpowder', 'projectile', 'tip'),
+            'fields': ('cover', 'gunpowder', 'projectile'),
         }),
         (_('Other'), {
             'fields': ('notes', )
         }),
     )
+    list_display = ('name', 'year', 'country', 'projectile',)
     list_filter = ('head_stamp', 'ammo_type')
-    search_fields = ['year']
+    search_fields = ['name', 'year']
     inlines = [AmmoCaliberInline, PhotoInline]
     exclude = ('photos', )
 
@@ -61,10 +56,9 @@ class AmmoAdmin(admin.ModelAdmin):
         model = Ammo
 
 admin.site.register(Ammo, AmmoAdmin)
-admin.site.register(AmmoCover, AmmoCoverAdmin)
+admin.site.register(AmmoCasing, AmmoCoverAdmin)
 admin.site.register(AmmoGunpowder, AmmoGunpowderAdmin)
 admin.site.register(AmmoProjectile, AmmoProjectileAdmin)
-admin.site.register(AmmoTip, AmmoTipAdmin)
 
 # Unregister default models
 from django.contrib.sites.models import Site

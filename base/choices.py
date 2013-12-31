@@ -38,12 +38,12 @@ CALIBER_TYPE_CHOICES = (
     ('a4', _('alternative caliber 4')),
 )
 
-COVER_TYPE_CHOICES = (
+CASING_TYPE_CHOICES = (
     ('ri', _('rimmed')),
     ('rl', _('rimless')),
 )
 
-COVER_MATERIAL_CHOICES = (
+CASING_MATERIAL_CHOICES = (
     ('lt', _('latao')),
     ('al', _('aluminio')),
 )

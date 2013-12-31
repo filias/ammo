@@ -1,12 +1,14 @@
+#-*- coding: UTF-8 -*-
 import csv
 import os
 
 from django.core.management import BaseCommand
 
-from base.models import Ammo, AmmoCaliber, AmmoCover, AmmoGunpowder, \
-    AmmoProjectile, AmmoTip
-from django.db import IntegrityError
+from base.models import Ammo, AmmoCaliber, AmmoCasing, AmmoGunpowder, \
+    AmmoProjectile
 
+
+AMMO_PARTS = ('casing', 'projectile', 'gunpowder')
 
 def fix_float(value):
     if not value:
@@ -39,24 +41,11 @@ COLORS = {'vermelho': 're',
           'castanho': 'br',
           'cinza': 'ga'}
 
-def fix_color(color, part=None):
+def fix_color(color):
     if not color:
         return ''
 
     color = color.lower()
-    if part == 'f':
-        if 'f-' not in color:
-            return ''
-        else:
-            # cor do verniz do fulminante
-            color = color.replace('f-', '')
-    elif part == 'p':
-        if 'p-' not in color:
-            return ''
-        else:
-            # cor do verniz do projectil
-            color = color.replace('p-', '')
-
     if color in COLORS:
         return COLORS[color]
     else:
@@ -110,13 +99,6 @@ def fix_tip_shape(tip_shape):
         print 'tip shape not in dict ' + tip_shape
         return ''
 
-def fix_tip(value):
-    value = value.split(',')
-    tip_type = value[0].strip()
-    tip_shape = value[1].strip()
-
-    return fix_tip_type(tip_type), fix_tip_shape(tip_shape)
-
 
 class Command(BaseCommand):
     """Reads the csv file and puts it in the db"""
@@ -130,60 +112,53 @@ class Command(BaseCommand):
         kwargs_ammo['head_stamp'] = line[1].strip()
         kwargs_ammo['year'] = line[2].strip()
         kwargs_ammo['ammo_type'] = line[3].strip()
-        kwargs_ammo['fulminant_varnish_color'] = fix_color(line[4].strip(), part='f')
-        kwargs_ammo['country'] = line[10].strip()
-        kwargs_ammo['factory'] = line[11].strip()
-        kwargs_ammo['total_weight'] = fix_float(line[16].strip())
-        kwargs_ammo['percussion_type'] = line[27].strip()
-        kwargs_ammo['notes'] = line[28].strip()
+        kwargs_ammo['fulminant_varnish_color'] = fix_color(line[4].strip())
+        kwargs_ammo['country'] = line[11].strip()
+        kwargs_ammo['factory'] = line[12].strip()
+        kwargs_ammo['total_weight'] = fix_float(line[17].strip())
+        kwargs_ammo['percussion_type'] = line[28].strip()
+        kwargs_ammo['notes'] = line[29].strip()
 
         # Caliber
         kwargs_calibers = dict()
-        kwargs_calibers['caliber_1'] = line[12].strip()
-        kwargs_calibers['caliber_2'] = line[13].strip()
-        kwargs_calibers['caliber_3'] = line[14].strip()
-        kwargs_calibers['caliber_4'] = line[15].strip()
-
-        # Tip
-        kwargs_tip = dict()
-        kwargs_tip['tip_color'] = fix_color(line[5].strip())
-        tip_type = line[6].strip()
-        if ',' in tip_type:
-            kwargs_tip['tip_type'], kwargs_tip['tip_shape'] = fix_tip(tip_type)
-        else:
-            kwargs_tip['tip_type'] = fix_tip_type(tip_type)
-            kwargs_tip['tip_shape'] = fix_tip_shape(line[7].strip())
+        kwargs_calibers['caliber_1'] = line[13].strip()
+        kwargs_calibers['caliber_2'] = line[14].strip()
+        kwargs_calibers['caliber_3'] = line[15].strip()
+        kwargs_calibers['caliber_4'] = line[16].strip()
 
         # Projectile
         kwargs_projectile = dict()
-        kwargs_projectile['projectile_diameter'] = fix_float(line[8].strip())
-        kwargs_projectile['projectile_material'] = line[19].strip()
-        kwargs_projectile['projectile_weight'] = fix_float(line[21].strip())
-        kwargs_projectile['has_magnetic_properties'] = line[18].strip() == 'Sim'
-        kwargs_projectile['sulco_serrilhado'] = line[20].strip()
-        kwargs_projectile['projectile_varnish_color'] = fix_color(line[4].strip(), part='p')
+        kwargs_projectile['projectile_diameter'] = fix_float(line[9].strip())
+        kwargs_projectile['projectile_material'] = line[20].strip()
+        kwargs_projectile['projectile_weight'] = fix_float(line[18].strip())
+        kwargs_projectile['has_magnetic_properties'] = line[19].strip() == 'Sim'
+        kwargs_projectile['serrated'] = line[21].strip()
+        kwargs_projectile['projectile_varnish_color'] = fix_color(line[5].strip())
+        kwargs_projectile['tip_color'] = fix_color(line[6].strip())
+        kwargs_projectile['tip_type'] = fix_tip_type(line[7].strip())
+        kwargs_projectile['tip_shape'] = fix_tip_shape(line[8].strip())
 
         # Cover
         kwargs_cover = dict()
-        kwargs_cover['cover_length'] = fix_float(line[9].strip())
-        kwargs_cover['cover_material'] = line[22].strip()
-        kwargs_cover['cover_type'] = line[23].strip()
-        kwargs_cover['cover_weight'] = fix_float(line[24].strip())
+        kwargs_cover['cover_length'] = fix_float(line[10].strip())
+        kwargs_cover['cover_material'] = line[23].strip()
+        kwargs_cover['cover_type'] = line[24].strip()
+        kwargs_cover['cover_weight'] = fix_float(line[25].strip())
 
         # Gunpowder
         kwargs_gunpowder = dict()
-        kwargs_gunpowder['gunpowder_type'] = line[25].strip()
-        kwargs_gunpowder['gunpowder_color'] = fix_color(line[26].strip())
-        kwargs_gunpowder['gunpowder_weight'] = fix_float(line[17].strip())
+        kwargs_gunpowder['gunpowder_type'] = line[26].strip()
+        kwargs_gunpowder['gunpowder_color'] = fix_color(line[27].strip())
+        kwargs_gunpowder['gunpowder_weight'] = fix_float(line[22].strip())
 
         # Put together
-        for key in ('ammo', 'tip', 'cover', 'calibers', 'projectile', 'gunpowder'):
+        for key in ('ammo', 'cover', 'calibers', 'projectile', 'gunpowder'):
             result[key] = locals()['kwargs_' + key]
 
         return result
 
     def create_ammocover(self, **kwargs):
-        cover, created = AmmoCover.objects.get_or_create(**kwargs)
+        cover, created = AmmoCasing.objects.get_or_create(**kwargs)
         return cover
 
     def create_ammoprojectile(self, **kwargs):
@@ -193,10 +168,6 @@ class Command(BaseCommand):
     def create_ammogunpowder(self, **kwargs):
         gunpowder, created = AmmoGunpowder.objects.get_or_create(**kwargs)
         return gunpowder
-
-    def create_ammotip(self, **kwargs):
-        tip, created = AmmoTip.objects.get_or_create(**kwargs)
-        return tip
 
     def handle(self, *args, **options):
         filename = 'ammo-lagoa.csv'
@@ -213,7 +184,7 @@ class Command(BaseCommand):
 
                 # Create dependencies
                 values = dict()
-                for key in ('cover', 'projectile', 'gunpowder', 'tip'):
+                for key in AMMO_PARTS:
                     values[key] = getattr(self, 'create_ammo' + key)(**result[key])
 
                 # Create calibers
@@ -221,5 +192,5 @@ class Command(BaseCommand):
 
                 # Create ammo
                 ammo = Ammo.objects.create(**result['ammo'])
-                for key in ('cover', 'projectile', 'gunpowder', 'tip'):
+                for key in AMMO_PARTS:
                     ammo.key = values[key]
