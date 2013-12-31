@@ -72,7 +72,7 @@ class AmmoProjectile(models.Model):
 
 class Ammo(models.Model):
     name = models.CharField(_('name'), max_length=64)  # calibre
-    head_stamp = models.TextField(_('head stamp'), blank=True)  # headstamp
+    head_stamp = models.CharField(_('head stamp'), max_length=64, blank=True)  # headstamp
     year = models.CharField(_('year'), max_length=4, choices=YEAR_CHOICES, blank=True)  # ano de fabrico
     ammo_type = models.CharField(_('ammo type'), max_length=2, choices=AMMO_TYPE_CHOICES, blank=True)  # tipo
     primer_varnish_color = models.CharField(_('primer varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz parte f

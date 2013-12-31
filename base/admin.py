@@ -12,6 +12,8 @@ class PhotoInline(admin.TabularInline):
 class AmmoCaliberInline(admin.StackedInline):
     model = AmmoCaliber
     extra = 4
+    max_num = 4
+    exclude = ('caliber_type',)
 
 
 class AmmoCasingAdmin(admin.ModelAdmin):
@@ -36,11 +38,11 @@ class AmmoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('name', 'head_stamp', 'year', 'ammo_type',
-            'fulminant_varnish_color', 'total_weight',
+            'primer_varnish_color', 'total_weight',
             'percussion_type', 'country', 'factory')
         }),
         (_('Details'), {
-            'fields': ('cover', 'gunpowder', 'projectile'),
+            'fields': ('casing', 'gunpowder', 'projectile'),
         }),
         (_('Other'), {
             'fields': ('notes', )
