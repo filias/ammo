@@ -192,9 +192,12 @@ class Command(BaseCommand):
 
                 # Create ammo
                 ammo = Ammo.objects.create(**result['ammo'])
-                for key in AMMO_PARTS:
-                    ammo.key = values[key]
+
+                ammo.projectile = values['projectile']
+                ammo.casing = values['casing']
+                ammo.gunpowder = values['gunpowder']
                 ammo.save()
+
                 print 'created ammo {}'.format(ammo.pk)
 
                 # Create calibers

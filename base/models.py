@@ -14,11 +14,12 @@ class AmmoCasing(models.Model):
     casing_length = models.FloatField(_('casing length'), blank=True, null=True, help_text=_('(in mm)'))  # cl
 
     def __unicode__(self):
-        #return '{} {} {}mm {}g'.format(self.get_casing_material_display(),
-        #                               self.get_casing_type_display(),
-        #                               self.casing_length,
-        #                               self.casing_weight)
-        return '{}'.format(self.pk)
+        result = ''
+        result += self.get_casing_material_display() + ' ' if self.get_casing_material_display() else ''
+        result += self.get_casing_type_display() + ' ' if self.get_casing_type_display() else ''
+        result += str(self.casing_length) + 'mm ' if self.casing_length else ''
+        result += str(self.casing_weight) + 'g' if self.casing_weight else ''
+        return result
 
     class Meta:
         unique_together = ('casing_weight', 'casing_type', 'casing_material', 'casing_length')
@@ -32,9 +33,11 @@ class AmmoGunpowder(models.Model):
     gunpowder_weight = models.FloatField(_('gunpowder weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso da polvora
 
     def __unicode__(self):
-        #return '{} {}'.format(self.get_gunpowder_type_display(),
-        #                      self.get_gunpowder_color_display())
-        return '{}'.format(self.pk)
+        result = ''
+        result += self.get_gunpowder_type_display() + ' ' if self.get_gunpowder_type_display() else ''
+        result += self.get_gunpowder_color_display() + ' ' if self.get_gunpowder_color_display() else ''
+        result += str(self.gunpowder_weight) + 'g' if self.gunpowder_weight else ''
+        return result
 
     class Meta:
         unique_together = ('gunpowder_type', 'gunpowder_weight', 'gunpowder_color')
@@ -54,12 +57,17 @@ class AmmoProjectile(models.Model):
     tip_shape = models.CharField(_('tip shape'), max_length=32, choices=TIP_SHAPE_CHOICES, blank=True)  # forma da ponta
 
     def __unicode__(self):
-        return '{}'.format(self.pk)
-        #return '{} {}mm {}g {} {}'.format(self.get_projectile_material_display(),
-        #                                  self.projectile_diameter,
-        #                                  self.projectile_weight,
-        #                                  self.has_magnetic_properties,
-        #                                  self.get_serrated_display())
+        result = ''
+        result += str(self.projectile_diameter) + 'mm ' if self.projectile_diameter else ''
+        result += str(self.projectile_weight) + 'g ' if self.projectile_weight else ''
+        result += self.get_projectile_material_display() + ' ' if self.get_projectile_material_display() else ''
+        result += self.serrated + ' ' if self.serrated else ''
+        result += str(self.has_magnetic_properties) + ' '
+        result += self.get_projectile_varnish_color_display() + ' ' if self.get_projectile_varnish_color_display() else ''
+        result += self.get_tip_color_display() + ' ' if self.get_tip_color_display() else ''
+        result += self.get_tip_type_display() + ' ' if self.get_tip_type_display() else ''
+        result += self.get_tip_shape_display() if self.get_tip_shape_display() else ''
+        return result
 
     class Meta:
         unique_together = ('projectile_diameter', 'projectile_weight',
