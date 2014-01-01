@@ -5,3 +5,4 @@ MySQL-python
 django-extensions
 PIL
 django-photologue
+unidecode
