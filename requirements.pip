@@ -6,3 +6,5 @@ django-extensions
 PIL
 django-photologue
 unidecode
+ipython
+ipdb

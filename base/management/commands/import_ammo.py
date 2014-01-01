@@ -75,7 +75,7 @@ def fix_country(country):
     if not country:
         return ''
 
-    country = unidecode(country.lower())
+    country = unidecode(unicode(country.lower()))
     if country in COUNTRIES:
         return COUNTRIES[country]
     else:
@@ -87,7 +87,10 @@ def create_slug(value):
     if not value:
         return ''
 
-    value = unidecode(unicode(value.lower().replace(' ', '-')))
+    try:
+        value = unidecode(unicode(value.lower().replace(' ', '-')))
+    except UnicodeDecodeError:
+        import ipdb; ipdb.set_trace()
     return value
 
 
@@ -99,31 +102,31 @@ class Command(BaseCommand):
 
         # Ammo
         kwargs_ammo = dict()
-        kwargs_ammo['name'] = line[0].strip()
-        kwargs_ammo['head_stamp'] = line[1].strip()
+        kwargs_ammo['name'] = unicode(line[0].strip())
+        kwargs_ammo['head_stamp'] = unicode(line[1].strip())
         kwargs_ammo['year'] = line[2].strip()
         kwargs_ammo['ammo_type'] = create_slug(line[3].strip())
         kwargs_ammo['primer_varnish_color'] = fix_color(line[4].strip())
         kwargs_ammo['country'] = fix_country(line[11].strip())
-        kwargs_ammo['factory'] = line[12].strip()
+        kwargs_ammo['factory'] = unicode(line[12].strip())
         kwargs_ammo['total_weight'] = fix_float(line[17].strip())
         kwargs_ammo['percussion_type'] = create_slug(line[28].strip())
-        kwargs_ammo['notes'] = line[29].strip()
+        kwargs_ammo['notes'] = unicode(line[29].strip())
 
         # Caliber
         kwargs_calibers = dict()
-        kwargs_calibers['a1'] = line[13].strip()
-        kwargs_calibers['a2'] = line[14].strip()
-        kwargs_calibers['a3'] = line[15].strip()
-        kwargs_calibers['a4'] = line[16].strip()
+        kwargs_calibers['a1'] = unicode(line[13].strip())
+        kwargs_calibers['a2'] = unicode(line[14].strip())
+        kwargs_calibers['a3'] = unicode(line[15].strip())
+        kwargs_calibers['a4'] = unicode(line[16].strip())
 
         # Projectile
         kwargs_projectile = dict()
         kwargs_projectile['projectile_diameter'] = fix_float(line[9].strip())
         kwargs_projectile['projectile_material'] = create_slug(line[20].strip())
         kwargs_projectile['projectile_weight'] = fix_float(line[18].strip())
-        kwargs_projectile['has_magnetic_properties'] = line[19].strip() == 'Sim'
-        kwargs_projectile['serrated'] = 1 if line[21].strip() == 'Sim' else 1
+        kwargs_projectile['has_magnetic_properties'] = unicode(line[19].strip()) == 'Sim'
+        kwargs_projectile['serrated'] = 1 if unicode(line[21].strip()) == 'Sim' else 1
         kwargs_projectile['projectile_varnish_color'] = fix_color(line[5].strip())
         kwargs_projectile['tip_color'] = fix_color(line[6].strip())
         kwargs_projectile['tip_type'] = create_slug(line[7].strip())
@@ -150,14 +153,17 @@ class Command(BaseCommand):
 
     def create_ammocasing(self, **kwargs):
         cover, created = AmmoCasing.objects.get_or_create(**kwargs)
+        print 'created cover {}'.format(cover.pk)
         return cover
 
     def create_ammoprojectile(self, **kwargs):
         projectile, created = AmmoProjectile.objects.get_or_create(**kwargs)
+        print 'created projectile {}'.format(projectile.pk)
         return projectile
 
     def create_ammogunpowder(self, **kwargs):
         gunpowder, created = AmmoGunpowder.objects.get_or_create(**kwargs)
+        print 'created gunpowder {}'.format(gunpowder.pk)
         return gunpowder
 
     def create_ammocaliber(self, ammo, **kwargs):
@@ -188,6 +194,9 @@ class Command(BaseCommand):
                 ammo = Ammo.objects.create(**result['ammo'])
                 for key in AMMO_PARTS:
                     ammo.key = values[key]
+                ammo.save()
+                print 'created ammo {}'.format(ammo.pk)
 
                 # Create calibers
                 self.create_ammocaliber(ammo, **result['calibers'])
+                print 'created calibers for ammo {}'.format(ammo.pk)
