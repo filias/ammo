@@ -48,9 +48,9 @@ class AmmoAdmin(admin.ModelAdmin):
             'fields': ('notes', )
         }),
     )
-    list_display = ('name', 'year', 'country', 'projectile', 'casing',
-                    'gunpowder')
-    list_filter = ('country', 'ammo_type', 'projectile', 'casing',
+    list_display = ('name', 'head_stamp', 'projectile_display', 'year', 'country',
+                    'magnetic_properties')
+    list_filter = ('country', 'ammo_type', 'name', 'projectile', 'casing',
                    'gunpowder', 'head_stamp')
     search_fields = ['name', 'year']
     inlines = [AmmoCaliberInline, PhotoInline]

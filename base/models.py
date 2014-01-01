@@ -64,9 +64,9 @@ class AmmoProjectile(models.Model):
         result += self.serrated + ' ' if self.serrated else ''
         result += str(self.has_magnetic_properties) + ' '
         result += self.get_projectile_varnish_color_display() + ' ' if self.get_projectile_varnish_color_display() else ''
-        result += self.get_tip_color_display() + ' ' if self.get_tip_color_display() else ''
         result += self.get_tip_type_display() + ' ' if self.get_tip_type_display() else ''
-        result += self.get_tip_shape_display() if self.get_tip_shape_display() else ''
+        result += self.get_tip_shape_display() + ' ' if self.get_tip_shape_display() else ''
+        result += self.get_tip_color_display() if self.get_tip_color_display() else ''
         return result
 
     class Meta:
@@ -102,6 +102,18 @@ class Ammo(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def magnetic_properties(self):
+        return self.projectile.has_magnetic_properties
+
+    @property
+    def projectile_display(self):
+        result = ''
+        result += self.projectile.get_tip_type_display() + ' ' if self.projectile.get_tip_type_display() else ''
+        result += self.projectile.get_tip_shape_display() + ' ' if self.projectile.get_tip_shape_display() else ''
+        result += self.projectile.get_tip_color_display() if self.projectile.get_tip_color_display() else ''
+        return result
 
     class Meta:
         verbose_name = _('Ammunition')
