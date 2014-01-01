@@ -3,6 +3,7 @@ import csv
 import os
 
 from django.core.management import BaseCommand
+from unidecode import unidecode
 
 from base.models import Ammo, AmmoCaliber, AmmoCasing, AmmoGunpowder, \
     AmmoProjectile
@@ -53,51 +54,41 @@ def fix_color(color):
         return ''
 
 
-TIP_TYPES = {
-    'chumbo': 'pb',
-    'teflon': 'tf',
-    'fmj': 'fm',
-    'round nose': 'rn',
-    'hollow point': 'hp',
-    'hidra shock': 'hs',
-    'madeira': 'wo',
-    'borracha': 'ru',
-    'cromada': 'cr',
+COUNTRIES = {
+    'belgica': 'be',
+    'bulgaria': 'bu',
+    'suica': 'ch',
+    'china': 'ci',
+    'checoslovaquia': 'cs',
+    'alemanha': 'de',
+    'finlandia': 'fi',
+    'franca': 'fr',
+    'italia': 'it',
+    'polonia': 'pl',
+    'inglaterra': 'uk',
+    'urss': 'ur',
+    'usa': 'us',
+    'yugoslavia': 'yu',
 }
 
-def fix_tip_type(tip_type):
-    if not tip_type:
+def fix_country(country):
+    if not country:
         return ''
 
-    tip_type = tip_type.lower()
-    if tip_type in TIP_TYPES:
-        return TIP_TYPES[tip_type]
+    country = unidecode(country.lower())
+    if country in COUNTRIES:
+        return COUNTRIES[country]
     else:
-        print 'tip type not in dict ' + tip_type
+        print 'color not in dict ' + country
         return ''
 
-TIP_SHAPES = {
-    'hollow cavity': 'hc',
-    'hollow point': 'hp',
-    'round nose': 'rn',
-    'flat point': 'fp',
-    'truncated': 'tr',
-    'semi-wadcute': 'sw',
-    'calepino de papel': 'cp',
-    'spitzer': 'sp',
-    'boat-tail': 'bt',
-}
 
-def fix_tip_shape(tip_shape):
-    if not tip_shape:
+def create_slug(value):
+    if not value:
         return ''
 
-    tip_shape = tip_shape.lower()
-    if tip_shape in TIP_SHAPES:
-        return TIP_SHAPES[tip_shape]
-    else:
-        print 'tip shape not in dict ' + tip_shape
-        return ''
+    value = unidecode(unicode(value.lower().replace(' ', '-')))
+    return value
 
 
 class Command(BaseCommand):
@@ -111,43 +102,43 @@ class Command(BaseCommand):
         kwargs_ammo['name'] = line[0].strip()
         kwargs_ammo['head_stamp'] = line[1].strip()
         kwargs_ammo['year'] = line[2].strip()
-        kwargs_ammo['ammo_type'] = line[3].strip()
+        kwargs_ammo['ammo_type'] = create_slug(line[3].strip())
         kwargs_ammo['primer_varnish_color'] = fix_color(line[4].strip())
-        kwargs_ammo['country'] = line[11].strip()
+        kwargs_ammo['country'] = fix_country(line[11].strip())
         kwargs_ammo['factory'] = line[12].strip()
         kwargs_ammo['total_weight'] = fix_float(line[17].strip())
-        kwargs_ammo['percussion_type'] = line[28].strip()
+        kwargs_ammo['percussion_type'] = create_slug(line[28].strip())
         kwargs_ammo['notes'] = line[29].strip()
 
         # Caliber
         kwargs_calibers = dict()
-        kwargs_calibers['caliber_1'] = line[13].strip()
-        kwargs_calibers['caliber_2'] = line[14].strip()
-        kwargs_calibers['caliber_3'] = line[15].strip()
-        kwargs_calibers['caliber_4'] = line[16].strip()
+        kwargs_calibers['a1'] = line[13].strip()
+        kwargs_calibers['a2'] = line[14].strip()
+        kwargs_calibers['a3'] = line[15].strip()
+        kwargs_calibers['a4'] = line[16].strip()
 
         # Projectile
         kwargs_projectile = dict()
         kwargs_projectile['projectile_diameter'] = fix_float(line[9].strip())
-        kwargs_projectile['projectile_material'] = line[20].strip()
+        kwargs_projectile['projectile_material'] = create_slug(line[20].strip())
         kwargs_projectile['projectile_weight'] = fix_float(line[18].strip())
         kwargs_projectile['has_magnetic_properties'] = line[19].strip() == 'Sim'
-        kwargs_projectile['serrated'] = line[21].strip()
+        kwargs_projectile['serrated'] = 1 if line[21].strip() == 'Sim' else 1
         kwargs_projectile['projectile_varnish_color'] = fix_color(line[5].strip())
         kwargs_projectile['tip_color'] = fix_color(line[6].strip())
-        kwargs_projectile['tip_type'] = fix_tip_type(line[7].strip())
-        kwargs_projectile['tip_shape'] = fix_tip_shape(line[8].strip())
+        kwargs_projectile['tip_type'] = create_slug(line[7].strip())
+        kwargs_projectile['tip_shape'] = create_slug(line[8].strip())
 
         # Casing
         kwargs_casing = dict()
         kwargs_casing['casing_length'] = fix_float(line[10].strip())
-        kwargs_casing['casing_material'] = line[23].strip()
-        kwargs_casing['casing_type'] = line[24].strip()
+        kwargs_casing['casing_material'] = create_slug(line[23].strip())
+        kwargs_casing['casing_type'] = create_slug(line[24].strip())
         kwargs_casing['casing_weight'] = fix_float(line[25].strip())
 
         # Gunpowder
         kwargs_gunpowder = dict()
-        kwargs_gunpowder['gunpowder_type'] = line[26].strip()
+        kwargs_gunpowder['gunpowder_type'] = create_slug(line[26].strip())
         kwargs_gunpowder['gunpowder_color'] = fix_color(line[27].strip())
         kwargs_gunpowder['gunpowder_weight'] = fix_float(line[22].strip())
 
@@ -157,7 +148,7 @@ class Command(BaseCommand):
 
         return result
 
-    def create_ammocover(self, **kwargs):
+    def create_ammocasing(self, **kwargs):
         cover, created = AmmoCasing.objects.get_or_create(**kwargs)
         return cover
 
@@ -169,6 +160,12 @@ class Command(BaseCommand):
         gunpowder, created = AmmoGunpowder.objects.get_or_create(**kwargs)
         return gunpowder
 
+    def create_ammocaliber(self, ammo, **kwargs):
+        for key, value in kwargs.items():
+            AmmoCaliber.objects.get_or_create(ammo=ammo,
+                                              caliber_type=key,
+                                              caliber_value=value)
+
     def handle(self, *args, **options):
         filename = 'ammo-lagoa.csv'
         filepath = os.path.join(os.path.curdir, 'db', filename)
@@ -177,7 +174,7 @@ class Command(BaseCommand):
             csv_reader = csv.reader(f, delimiter='\t')
 
             for idx, line in enumerate(csv_reader):
-                if idx == 0:
+                if idx in (0, 1):
                     continue
                 # Save values
                 result = self.get_values(line)
@@ -187,10 +184,10 @@ class Command(BaseCommand):
                 for key in AMMO_PARTS:
                     values[key] = getattr(self, 'create_ammo' + key)(**result[key])
 
-                # Create calibers
-                # TODO
-
                 # Create ammo
                 ammo = Ammo.objects.create(**result['ammo'])
                 for key in AMMO_PARTS:
                     ammo.key = values[key]
+
+                # Create calibers
+                self.create_ammocaliber(ammo, **result['calibers'])
