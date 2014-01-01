@@ -106,6 +106,6 @@ class AmmoCaliber(models.Model):
     caliber_value = models.CharField(_('caliber value'), max_length=32, blank=True)
 
     class Meta:
-        #unique_together = ('ammo', 'caliber_type', 'caliber_value')
+        unique_together = ('ammo', 'caliber_type', 'caliber_value')
         verbose_name = _('Caliber')
         verbose_name_plural = _('Calibers')
