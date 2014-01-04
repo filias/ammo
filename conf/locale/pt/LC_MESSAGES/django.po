@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-04 14:14+0000\n"
+"POT-Creation-Date: 2014-01-04 16:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,194 +222,210 @@ msgid "France"
 msgstr "França"
 
 #: base/choices.py:81
+msgid "Italy"
+msgstr "Itália"
+
+#: base/choices.py:82
 msgid "Poland"
 msgstr "Polónia"
 
-#: base/choices.py:82
+#: base/choices.py:83
 msgid "UK"
 msgstr "Reino Unido"
 
-#: base/choices.py:83
+#: base/choices.py:84
 msgid "USSR"
 msgstr "URSS"
 
-#: base/choices.py:84
+#: base/choices.py:85
 msgid "USA"
 msgstr "EUA"
 
-#: base/choices.py:85
+#: base/choices.py:86
 msgid "Yugoslavia"
 msgstr "Jugoslávia"
 
-#: base/choices.py:89
+#: base/choices.py:90
 msgid "anelar"
 msgstr ""
 
-#: base/choices.py:90
+#: base/choices.py:91
 msgid "central"
 msgstr ""
 
-#: base/choices.py:101
+#: base/choices.py:102
 msgid "chumbo"
 msgstr ""
 
-#: base/choices.py:102
+#: base/choices.py:103
 msgid "chumbo cobreado"
 msgstr ""
 
-#: base/choices.py:103
+#: base/choices.py:104
 msgid "chumbo dourado"
 msgstr ""
 
-#: base/choices.py:104
+#: base/choices.py:105
 msgid "chumbo com camisa de cobre"
 msgstr ""
 
-#: base/choices.py:105
+#: base/choices.py:106
 msgid "chumbo com camisa de cobre e aco"
 msgstr "chumbo com camisa de cobre e aço"
 
 #: base/models.py:11
+msgid "country code"
+msgstr "código do país"
+
+#: base/models.py:12
+msgid "country name"
+msgstr "nome do país"
+
+#: base/models.py:18
+msgid "Country"
+msgstr "País"
+
+#: base/models.py:19
+msgid "Countries"
+msgstr "Paises"
+
+#: base/models.py:23
 msgid "name"
 msgstr "nome"
 
-#: base/models.py:12
+#: base/models.py:24
 msgid "head stamp"
 msgstr ""
 
-#: base/models.py:13
+#: base/models.py:25
 msgid "year"
 msgstr "ano"
 
-#: base/models.py:14
+#: base/models.py:26
 msgid "ammo type"
 msgstr "tipo de munição"
 
-#: base/models.py:15
+#: base/models.py:27
 msgid "primer varnish color"
 msgstr "cor do verniz do fulminante"
 
-#: base/models.py:16
+#: base/models.py:28
 msgid "total weight"
 msgstr "peso total"
 
-#: base/models.py:16 base/models.py:25 base/models.py:37
+#: base/models.py:28 base/models.py:37 base/models.py:49
 msgid "(in grams)"
 msgstr "(em gramas)"
 
-#: base/models.py:17
+#: base/models.py:29
 msgid "percussion type"
 msgstr "tipo de percussão"
 
-#: base/models.py:19
-msgid "country"
-msgstr "país"
-
-#: base/models.py:20
+#: base/models.py:32
 msgid "factory"
 msgstr "fábrica"
 
-#: base/models.py:21
+#: base/models.py:33
 msgid "notes"
 msgstr "notas"
 
-#: base/models.py:24
+#: base/models.py:36
 msgid "projectile diameter"
 msgstr "diâmetro do projétil"
 
-#: base/models.py:24 base/models.py:43
+#: base/models.py:36 base/models.py:55
 msgid "(in mm)"
 msgstr "(em mm)"
 
-#: base/models.py:25
+#: base/models.py:37
 msgid "projectile weight"
 msgstr "peso do projétil"
 
-#: base/models.py:26
+#: base/models.py:38
 msgid "projectile material"
 msgstr "material do projétil"
 
-#: base/models.py:27
+#: base/models.py:39
 msgid "serrated"
 msgstr "sulco serrilhado"
 
-#: base/models.py:28
+#: base/models.py:40
 msgid "magnetic properties"
 msgstr "propriedades magnéticas"
 
-#: base/models.py:29
+#: base/models.py:41
 msgid "projectile varnish color"
 msgstr "cor do verniz do projétil"
 
-#: base/models.py:30
+#: base/models.py:42
 msgid "tip color"
 msgstr "cor da ponta"
 
-#: base/models.py:31
+#: base/models.py:43
 msgid "tip type"
 msgstr "tipo de ponta"
 
-#: base/models.py:32
+#: base/models.py:44
 msgid "tip shape"
 msgstr "forma da ponta"
 
-#: base/models.py:35
+#: base/models.py:47
 msgid "gunpowder type"
 msgstr "tipo de pólvora"
 
-#: base/models.py:36
+#: base/models.py:48
 msgid "gunpowder color"
 msgstr "cor da pólvora"
 
-#: base/models.py:37
+#: base/models.py:49
 msgid "gunpowder weight"
 msgstr "peso da pólvora"
 
-#: base/models.py:40
+#: base/models.py:52
 msgid "casing weight"
 msgstr "peso do invólucro"
 
-#: base/models.py:40
+#: base/models.py:52
 msgid "in grams"
 msgstr "(em gramas)"
 
-#: base/models.py:41
+#: base/models.py:53
 msgid "casing type"
 msgstr "tipo de invólucro"
 
-#: base/models.py:42
+#: base/models.py:54
 msgid "casing material"
 msgstr "material do invólucro"
 
-#: base/models.py:43
+#: base/models.py:55
 msgid "casing length"
 msgstr "comprimento do invólucro"
 
-#: base/models.py:46
+#: base/models.py:58
 msgid "photos"
 msgstr "fotos"
 
-#: base/models.py:86
+#: base/models.py:98
 msgid "Ammunition"
 msgstr "Munição"
 
-#: base/models.py:87
+#: base/models.py:99
 msgid "Ammunitions"
 msgstr "Munições"
 
-#: base/models.py:92
+#: base/models.py:104
 msgid "caliber type"
 msgstr "tipo de calibre"
 
-#: base/models.py:93
+#: base/models.py:105
 msgid "caliber value"
 msgstr "calibre"
 
-#: base/models.py:97
+#: base/models.py:109
 msgid "Caliber"
 msgstr "Calibre"
 
-#: base/models.py:98
+#: base/models.py:110
 msgid "Calibers"
 msgstr "Calibres"
 
