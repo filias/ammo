@@ -54,9 +54,9 @@ class Ammo(models.Model):
     @property
     def projectile_display(self):
         result = ''
-        result += self.projectile.get_tip_type_display() + ' ' if self.projectile.get_tip_type_display() else ''
-        result += self.projectile.get_tip_shape_display() + ' ' if self.projectile.get_tip_shape_display() else ''
-        result += self.projectile.get_tip_color_display() if self.projectile.get_tip_color_display() else ''
+        result += self.get_tip_type_display() + ' ' if self.get_tip_type_display() else ''
+        result += self.get_tip_shape_display() + ' ' if self.get_tip_shape_display() else ''
+        result += self.get_tip_color_display() if self.get_tip_color_display() else ''
         return result
 
     class Meta:
