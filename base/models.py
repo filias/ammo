@@ -7,6 +7,18 @@ from photologue.models import Photo
 from base.choices import *
 
 
+class Country(models.Model):
+    country_code = models.CharField(_('country code'), max_length=2, unique=True)
+    country_name = models.CharField(_('country name'), max_length=64, unique=True)
+
+    def __unicode__(self):
+        return '{0.country_name} ({0.country_code})'.format(self)
+
+    class Meta:
+        verbose_name = _('Country')
+        verbose_name_plural = _('Countries')
+
+
 class Ammo(models.Model):
     name = models.CharField(_('name'), max_length=64)  # calibre
     head_stamp = models.CharField(_('head stamp'), max_length=64, blank=True)  # headstamp
@@ -16,7 +28,7 @@ class Ammo(models.Model):
     total_weight = models.FloatField(_('total weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso total
     percussion_type = models.CharField(_('percussion type'), max_length=32, choices=PERCUSSION_TYPE_CHOICES, blank=True)  # tipo de percussao
 
-    country = models.CharField(_('country'), max_length=2, choices=COUNTRY_CHOICES, blank=True)  # pais
+    country = models.ForeignKey(Country, blank=True, null=True)  # pais
     factory = models.CharField(_('factory'), max_length=128, blank=True)  # fabrica
     notes = models.TextField(_('notes'), blank=True)  # notas
 

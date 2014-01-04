@@ -8,6 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'Country'
+        db.create_table(u'base_country', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('country_code', self.gf('django.db.models.fields.CharField')(unique=True, max_length=2)),
+            ('country_name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=64)),
+        ))
+        db.send_create_signal(u'base', ['Country'])
+
         # Adding model 'Ammo'
         db.create_table(u'base_ammo', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -18,7 +26,7 @@ class Migration(SchemaMigration):
             ('primer_varnish_color', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('total_weight', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('percussion_type', self.gf('django.db.models.fields.CharField')(max_length=32, blank=True)),
-            ('country', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
+            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['base.Country'], null=True, blank=True)),
             ('factory', self.gf('django.db.models.fields.CharField')(max_length=128, blank=True)),
             ('notes', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('projectile_diameter', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
@@ -73,6 +81,9 @@ class Migration(SchemaMigration):
         # Removing unique constraint on 'Ammo', fields ['name', 'head_stamp', 'year', 'ammo_type', 'primer_varnish_color', 'total_weight', 'percussion_type', 'projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape', 'gunpowder_type', 'gunpowder_weight', 'gunpowder_color', 'casing_weight', 'casing_type', 'casing_material', 'casing_length']
         db.delete_unique(u'base_ammo', ['name', 'head_stamp', 'year', 'ammo_type', 'primer_varnish_color', 'total_weight', 'percussion_type', 'projectile_diameter', 'projectile_weight', 'projectile_material', 'serrated', 'has_magnetic_properties', 'projectile_varnish_color', 'tip_color', 'tip_type', 'tip_shape', 'gunpowder_type', 'gunpowder_weight', 'gunpowder_color', 'casing_weight', 'casing_type', 'casing_material', 'casing_length'])
 
+        # Deleting model 'Country'
+        db.delete_table(u'base_country')
+
         # Deleting model 'Ammo'
         db.delete_table(u'base_ammo')
 
@@ -91,7 +102,7 @@ class Migration(SchemaMigration):
             'casing_material': ('django.db.models.fields.CharField', [], {'max_length': '32', 'blank': 'True'}),
             'casing_type': ('django.db.models.fields.CharField', [], {'max_length': '32', 'blank': 'True'}),
             'casing_weight': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
-            'country': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['base.Country']", 'null': 'True', 'blank': 'True'}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'factory': ('django.db.models.fields.CharField', [], {'max_length': '128', 'blank': 'True'}),
             'gunpowder_color': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
@@ -122,6 +133,12 @@ class Migration(SchemaMigration):
             'ammo': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'calibers'", 'to': u"orm['base.Ammo']"}),
             'caliber_type': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'caliber_value': ('django.db.models.fields.CharField', [], {'max_length': '32', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        u'base.country': {
+            'Meta': {'object_name': 'Country'},
+            'country_code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '2'}),
+            'country_name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '64'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         u'photologue.photo': {

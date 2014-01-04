@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from base.models import Ammo, AmmoCaliber
+from base.models import Ammo, AmmoCaliber, Country
 
 
 class PhotoInline(admin.TabularInline):
@@ -53,7 +53,14 @@ class AmmoAdmin(admin.ModelAdmin):
     class Meta:
         model = Ammo
 
+
+class CountryAdmin(admin.ModelAdmin):
+
+    class Meta:
+        model = Country
+
 admin.site.register(Ammo, AmmoAdmin)
+admin.site.register(Country, CountryAdmin)
 
 # Unregister default models
 from django.contrib.sites.models import Site

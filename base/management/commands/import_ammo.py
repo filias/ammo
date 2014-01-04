@@ -5,7 +5,8 @@ import os
 from django.core.management import BaseCommand
 from unidecode import unidecode
 
-from base.models import Ammo, AmmoCaliber
+from base.models import Ammo, AmmoCaliber, Country
+from base.choices import COUNTRY_CHOICES
 
 
 def fix_float(value):
@@ -68,16 +69,22 @@ COUNTRIES = {
     'yugoslavia': 'yu',
 }
 
+def create_countries():
+    for it in COUNTRY_CHOICES:
+        Country.objects.create(country_name=it[1], country_code=it[0])
+
+
 def fix_country(country):
     if not country:
-        return ''
+        return None
 
     country = unidecode(unicode(country.lower()))
     if country in COUNTRIES:
-        return COUNTRIES[country]
+        code = COUNTRIES[country]
+        return Country.objects.get(country_code=code)
     else:
-        print 'color not in dict ' + country
-        return ''
+        print 'country not in dict ' + country
+        return None
 
 
 def create_slug(value):
@@ -152,6 +159,9 @@ class Command(BaseCommand):
                                               caliber_value=value)
 
     def handle(self, *args, **options):
+
+        create_countries()
+
         filename = 'ammo-lagoa.csv'
         filepath = os.path.join(os.path.curdir, 'db', filename)
 

@@ -78,6 +78,7 @@ COUNTRY_CHOICES = (
     ('de', _('Germany')),
     ('fi', _('Finland')),
     ('fr', _('France')),
+    ('it', _('Italy')),
     ('pl', _('Poland')),
     ('uk', _('UK')),
     ('ur', _('USSR')),
