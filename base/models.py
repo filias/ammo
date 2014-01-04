@@ -7,77 +7,6 @@ from photologue.models import Photo
 from base.choices import *
 
 
-class AmmoCasing(models.Model):
-    casing_weight = models.FloatField(_('casing weight'), blank=True, null=True, help_text=_('in grams'))  # peso do involucro
-    casing_type = models.CharField(_('casing type'), max_length=32, choices=CASING_TYPE_CHOICES, blank=True)  # tipo do involucro
-    casing_material = models.CharField(_('casing material'), max_length=32, choices=CASING_MATERIAL_CHOICES, blank=True)  # material do involucro
-    casing_length = models.FloatField(_('casing length'), blank=True, null=True, help_text=_('(in mm)'))  # cl
-
-    def __unicode__(self):
-        result = ''
-        result += self.get_casing_material_display() + ' ' if self.get_casing_material_display() else ''
-        result += self.get_casing_type_display() + ' ' if self.get_casing_type_display() else ''
-        result += str(self.casing_length) + 'mm ' if self.casing_length else ''
-        result += str(self.casing_weight) + 'g' if self.casing_weight else ''
-        return result
-
-    class Meta:
-        unique_together = ('casing_weight', 'casing_type', 'casing_material', 'casing_length')
-        verbose_name = _('Casing')
-        verbose_name_plural = _('Casings')
-
-
-class AmmoGunpowder(models.Model):
-    gunpowder_type = models.CharField(_('gunpowder type'), max_length=32, choices=GUNPOWDER_TYPE_CHOICES, blank=True)  # tipo de polvora
-    gunpowder_color = models.CharField(_('gunpowder color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da polvora
-    gunpowder_weight = models.FloatField(_('gunpowder weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso da polvora
-
-    def __unicode__(self):
-        result = ''
-        result += self.get_gunpowder_type_display() + ' ' if self.get_gunpowder_type_display() else ''
-        result += self.get_gunpowder_color_display() + ' ' if self.get_gunpowder_color_display() else ''
-        result += str(self.gunpowder_weight) + 'g' if self.gunpowder_weight else ''
-        return result
-
-    class Meta:
-        unique_together = ('gunpowder_type', 'gunpowder_weight', 'gunpowder_color')
-        verbose_name = _('Gunpowder')
-        verbose_name_plural = _('Gunpowder')
-
-
-class AmmoProjectile(models.Model):
-    projectile_diameter = models.FloatField(_('projectile diameter'), null=True, blank=True, help_text=_('(in mm)'))  # B0
-    projectile_weight = models.FloatField(_('projectile weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso do projectil pode variar
-    projectile_material = models.CharField(_('projectile material'), max_length=32, choices=PROJECTILE_MATERIAL_CHOICES, blank=True)  # material do projectil
-    serrated = models.CharField(_('serrated'), max_length=1, choices=PROJECTILE_SS_CHOICES, blank=True, default='0')  # sulco serrilhado
-    has_magnetic_properties = models.BooleanField(_('magnetic properties'), default=False)  # propriedades magneticas
-    projectile_varnish_color = models.CharField(_('projectile varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz parte p
-    tip_color = models.CharField(_('tip color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da ponta
-    tip_type = models.CharField(_('tip type'), max_length=32, choices=TIP_TYPE_CHOICES, blank=True)  # tipo de ponta
-    tip_shape = models.CharField(_('tip shape'), max_length=32, choices=TIP_SHAPE_CHOICES, blank=True)  # forma da ponta
-
-    def __unicode__(self):
-        result = ''
-        result += str(self.projectile_diameter) + 'mm ' if self.projectile_diameter else ''
-        result += str(self.projectile_weight) + 'g ' if self.projectile_weight else ''
-        result += self.get_projectile_material_display() + ' ' if self.get_projectile_material_display() else ''
-        result += self.serrated + ' ' if self.serrated else ''
-        result += str(self.has_magnetic_properties) + ' '
-        result += self.get_projectile_varnish_color_display() + ' ' if self.get_projectile_varnish_color_display() else ''
-        result += self.get_tip_type_display() + ' ' if self.get_tip_type_display() else ''
-        result += self.get_tip_shape_display() + ' ' if self.get_tip_shape_display() else ''
-        result += self.get_tip_color_display() if self.get_tip_color_display() else ''
-        return result
-
-    class Meta:
-        unique_together = ('projectile_diameter', 'projectile_weight',
-                           'projectile_material', 'serrated',
-                           'has_magnetic_properties', 'projectile_varnish_color',
-                           'tip_color', 'tip_type', 'tip_shape')
-        verbose_name = _('Projectile')
-        verbose_name_plural = _('Projectiles')
-
-
 class Ammo(models.Model):
     name = models.CharField(_('name'), max_length=64)  # calibre
     head_stamp = models.CharField(_('head stamp'), max_length=64, blank=True)  # headstamp
@@ -91,10 +20,29 @@ class Ammo(models.Model):
     factory = models.CharField(_('factory'), max_length=128, blank=True)  # fabrica
     notes = models.TextField(_('notes'), blank=True)  # notas
 
-    # Foreign keys
-    projectile = models.ForeignKey(AmmoProjectile, blank=True, null=True, verbose_name=_('projectile'))
-    casing = models.ForeignKey(AmmoCasing, blank=True, null=True, verbose_name=_('casing'))
-    gunpowder = models.ForeignKey(AmmoGunpowder, blank=True, null=True, verbose_name=_('gunpowder'))
+    # Projectile
+    projectile_diameter = models.FloatField(_('projectile diameter'), null=True, blank=True, help_text=_('(in mm)'))  # B0
+    projectile_weight = models.FloatField(_('projectile weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso do projectil pode variar
+    projectile_material = models.CharField(_('projectile material'), max_length=32, choices=PROJECTILE_MATERIAL_CHOICES, blank=True)  # material do projectil
+    serrated = models.CharField(_('serrated'), max_length=1, choices=PROJECTILE_SS_CHOICES, blank=True, default='0')  # sulco serrilhado
+    has_magnetic_properties = models.BooleanField(_('magnetic properties'), default=False)  # propriedades magneticas
+    projectile_varnish_color = models.CharField(_('projectile varnish color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor do verniz parte p
+    tip_color = models.CharField(_('tip color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da ponta
+    tip_type = models.CharField(_('tip type'), max_length=32, choices=TIP_TYPE_CHOICES, blank=True)  # tipo de ponta
+    tip_shape = models.CharField(_('tip shape'), max_length=32, choices=TIP_SHAPE_CHOICES, blank=True)  # forma da ponta
+
+    # Gunpowder
+    gunpowder_type = models.CharField(_('gunpowder type'), max_length=32, choices=GUNPOWDER_TYPE_CHOICES, blank=True)  # tipo de polvora
+    gunpowder_color = models.CharField(_('gunpowder color'), max_length=2, choices=COLOR_CHOICES, blank=True)  # cor da polvora
+    gunpowder_weight = models.FloatField(_('gunpowder weight'), null=True, blank=True, help_text=_('(in grams)'))  # peso da polvora
+
+    # Casing
+    casing_weight = models.FloatField(_('casing weight'), blank=True, null=True, help_text=_('in grams'))  # peso do involucro
+    casing_type = models.CharField(_('casing type'), max_length=32, choices=CASING_TYPE_CHOICES, blank=True)  # tipo do involucro
+    casing_material = models.CharField(_('casing material'), max_length=32, choices=CASING_MATERIAL_CHOICES, blank=True)  # material do involucro
+    casing_length = models.FloatField(_('casing length'), blank=True, null=True, help_text=_('(in mm)'))  # cl
+
+    # Photos
     photos = models.ManyToManyField(Photo, verbose_name=_('photos'))
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -102,10 +50,6 @@ class Ammo(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    @property
-    def magnetic_properties(self):
-        return self.projectile.has_magnetic_properties
 
     @property
     def projectile_display(self):
@@ -116,6 +60,29 @@ class Ammo(models.Model):
         return result
 
     class Meta:
+        unique_together = ('name',
+                           'head_stamp',
+                           'year',
+                           'ammo_type',
+                           'primer_varnish_color',
+                           'total_weight',
+                           'percussion_type',
+                           'projectile_diameter',
+                           'projectile_weight',
+                           'projectile_material',
+                           'serrated',
+                           'has_magnetic_properties',
+                           'projectile_varnish_color',
+                           'tip_color',
+                           'tip_type',
+                           'tip_shape',
+                           'gunpowder_type',
+                           'gunpowder_weight',
+                           'gunpowder_color',
+                           'casing_weight',
+                           'casing_type',
+                           'casing_material',
+                           'casing_length')
         verbose_name = _('Ammunition')
         verbose_name_plural = _('Ammunitions')
 

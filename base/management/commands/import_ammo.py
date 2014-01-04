@@ -5,11 +5,8 @@ import os
 from django.core.management import BaseCommand
 from unidecode import unidecode
 
-from base.models import Ammo, AmmoCaliber, AmmoCasing, AmmoGunpowder, \
-    AmmoProjectile
+from base.models import Ammo, AmmoCaliber
 
-
-AMMO_PARTS = ('casing', 'projectile', 'gunpowder')
 
 def fix_float(value):
     if not value:
@@ -121,50 +118,32 @@ class Command(BaseCommand):
         kwargs_calibers['a4'] = unicode(line[16].strip())
 
         # Projectile
-        kwargs_projectile = dict()
-        kwargs_projectile['projectile_diameter'] = fix_float(line[9].strip())
-        kwargs_projectile['projectile_material'] = create_slug(line[20].strip())
-        kwargs_projectile['projectile_weight'] = fix_float(line[18].strip())
-        kwargs_projectile['has_magnetic_properties'] = unicode(line[19].strip()) == 'Sim'
-        kwargs_projectile['serrated'] = 1 if unicode(line[21].strip()) == 'Sim' else 1
-        kwargs_projectile['projectile_varnish_color'] = fix_color(line[5].strip())
-        kwargs_projectile['tip_color'] = fix_color(line[6].strip())
-        kwargs_projectile['tip_type'] = create_slug(line[7].strip())
-        kwargs_projectile['tip_shape'] = create_slug(line[8].strip())
+        kwargs_ammo['projectile_diameter'] = fix_float(line[9].strip())
+        kwargs_ammo['projectile_material'] = create_slug(line[20].strip())
+        kwargs_ammo['projectile_weight'] = fix_float(line[18].strip())
+        kwargs_ammo['has_magnetic_properties'] = unicode(line[19].strip()) == 'Sim'
+        kwargs_ammo['serrated'] = 1 if unicode(line[21].strip()) == 'Sim' else 1
+        kwargs_ammo['projectile_varnish_color'] = fix_color(line[5].strip())
+        kwargs_ammo['tip_color'] = fix_color(line[6].strip())
+        kwargs_ammo['tip_type'] = create_slug(line[7].strip())
+        kwargs_ammo['tip_shape'] = create_slug(line[8].strip())
 
         # Casing
-        kwargs_casing = dict()
-        kwargs_casing['casing_length'] = fix_float(line[10].strip())
-        kwargs_casing['casing_material'] = create_slug(line[23].strip())
-        kwargs_casing['casing_type'] = create_slug(line[24].strip())
-        kwargs_casing['casing_weight'] = fix_float(line[25].strip())
+        kwargs_ammo['casing_length'] = fix_float(line[10].strip())
+        kwargs_ammo['casing_material'] = create_slug(line[23].strip())
+        kwargs_ammo['casing_type'] = create_slug(line[24].strip())
+        kwargs_ammo['casing_weight'] = fix_float(line[25].strip())
 
         # Gunpowder
-        kwargs_gunpowder = dict()
-        kwargs_gunpowder['gunpowder_type'] = create_slug(line[26].strip())
-        kwargs_gunpowder['gunpowder_color'] = fix_color(line[27].strip())
-        kwargs_gunpowder['gunpowder_weight'] = fix_float(line[22].strip())
+        kwargs_ammo['gunpowder_type'] = create_slug(line[26].strip())
+        kwargs_ammo['gunpowder_color'] = fix_color(line[27].strip())
+        kwargs_ammo['gunpowder_weight'] = fix_float(line[22].strip())
 
         # Put together
-        for key in ('ammo', 'casing', 'calibers', 'projectile', 'gunpowder'):
+        for key in ('ammo', 'calibers'):
             result[key] = locals()['kwargs_' + key]
 
         return result
-
-    def create_ammocasing(self, **kwargs):
-        cover, created = AmmoCasing.objects.get_or_create(**kwargs)
-        print 'created cover {}'.format(cover.pk)
-        return cover
-
-    def create_ammoprojectile(self, **kwargs):
-        projectile, created = AmmoProjectile.objects.get_or_create(**kwargs)
-        print 'created projectile {}'.format(projectile.pk)
-        return projectile
-
-    def create_ammogunpowder(self, **kwargs):
-        gunpowder, created = AmmoGunpowder.objects.get_or_create(**kwargs)
-        print 'created gunpowder {}'.format(gunpowder.pk)
-        return gunpowder
 
     def create_ammocaliber(self, ammo, **kwargs):
         for key, value in kwargs.items():
@@ -185,19 +164,8 @@ class Command(BaseCommand):
                 # Save values
                 result = self.get_values(line)
 
-                # Create dependencies
-                values = dict()
-                for key in AMMO_PARTS:
-                    values[key] = getattr(self, 'create_ammo' + key)(**result[key])
-
                 # Create ammo
                 ammo = Ammo.objects.create(**result['ammo'])
-
-                ammo.projectile = values['projectile']
-                ammo.casing = values['casing']
-                ammo.gunpowder = values['gunpowder']
-                ammo.save()
-
                 print 'created ammo {}'.format(ammo.pk)
 
                 # Create calibers
